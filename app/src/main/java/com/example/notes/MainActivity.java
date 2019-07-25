@@ -1,0 +1,106 @@
+package com.example.notes;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    private TextView pinText;
+    private ImageView circleImage1;
+    private ImageView circleImage2;
+    private ImageView circleImage3;
+    private ImageView circleImage4;
+
+    private ImageButton buttonDelete;
+    int m = 0;
+    String pin ="1111";
+    Button button;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        initView();
+
+    }
+
+
+    public void numberClick(View view) {  // кнопка добавки цифры
+
+        m++;
+        button = (Button) view;
+        if (m == 1) {
+            pinText.append(button.getText().toString());
+            circleImage1.setColorFilter(getResources().getColor(R.color.colorCircle));
+        } else if (m == 2) {
+            circleImage2.setColorFilter(getResources().getColor(R.color.colorCircle));
+            pinText.append(button.getText().toString());
+        } else if (m == 3) {
+            circleImage3.setColorFilter(getResources().getColor(R.color.colorCircle));
+            pinText.append(button.getText().toString());
+        } else if (m == 4) {
+            circleImage4.setColorFilter(getResources().getColor(R.color.colorCircle));
+            pinText.append(button.getText().toString());
+            pinInit();
+        }
+    }
+
+    public void pinInit() {
+        if (pinText.getText().toString().equals(pin)) {
+            Toast.makeText(this, "ПИН-КОД  СОВПАЛ" + m, Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(this, "ПИН-КОД НЕ СОВПАЛ" + m, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void initView() {
+        pinText = findViewById(R.id.pin_text);
+        circleImage1 = findViewById(R.id.circle_1);
+        circleImage2 = findViewById(R.id.circle_2);
+        circleImage3 = findViewById(R.id.circle_3);
+        circleImage4 = findViewById(R.id.circle_4);
+        buttonDelete = findViewById(R.id.btn_delete);
+//        button0 = findViewById(R.id.btn_0);
+//        button1 = findViewById(R.id.btn_1);
+//        button2 = findViewById(R.id.btn_2);
+//        button3 = findViewById(R.id.btn_3);
+//        button4 = findViewById(R.id.btn_4);
+//        button5 = findViewById(R.id.btn_5);
+//        button6 = findViewById(R.id.btn_6);
+//        button7 = findViewById(R.id.btn_7);
+//        button8 = findViewById(R.id.btn_8);
+//        button9 = findViewById(R.id.btn_9);
+    }
+
+    public void numberClickDelete(View view) {
+        if (m>4){
+            m=4;
+        }
+        int charIndex = 0;
+        String text = pinText.getText().toString();
+        text = text.substring(0, charIndex) + text.substring(charIndex + 1);
+        pinText.setText(text);
+        Toast.makeText(MainActivity.this, "" + m, Toast.LENGTH_SHORT).show();
+
+        if (m == 4) {
+            circleImage4.setColorFilter(getResources().getColor(R.color.colorCircleDef));
+        } else if (m == 3) {
+            circleImage3.setColorFilter(getResources().getColor(R.color.colorCircleDef));
+        } else if (m == 2) {
+            circleImage2.setColorFilter(getResources().getColor(R.color.colorCircleDef));
+        } else if (m == 1) {
+            circleImage1.setColorFilter(getResources().getColor(R.color.colorCircleDef));
+        }
+        m--;
+    }
+
+
+}

@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 //        button9 = findViewById(R.id.btn_9);
     }
 
-    public void numberClickDelete(View view) {
+    public void numberClickDelete(View view) {   //переключение кружков
         if (m>4){
             m=4;
         }

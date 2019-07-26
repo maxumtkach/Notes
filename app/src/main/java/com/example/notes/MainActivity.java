@@ -1,14 +1,24 @@
 package com.example.notes;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,20 +27,48 @@ public class MainActivity extends AppCompatActivity {
     private ImageView circleImage2;
     private ImageView circleImage3;
     private ImageView circleImage4;
+    private  Button buttonSettinds;
 
     private ImageButton buttonDelete;
     int m = 0;
     String pin ="1111";
     Button button;
+    private ItemsDataAdapter adapter;
+    private List<Drawable> images = new ArrayList<>();
+    private Random random = new Random();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        ListView listView = findViewById(R.id.list_item);
+      //  Toolbar toolbar = findViewById(R.id.my_toolbar);
+        FloatingActionButton fab = findViewById(R.id.fab);
 
+
+
+        // Создаем и устанавливаем адаптер на наш список
+        adapter = new ItemsDataAdapter(this, null);
+        listView.setAdapter(adapter);
+//
+//        // При долгом тапе по элементу списка будем удалять его
+//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                adapter.showItemData(position);
+//                return true;
+//            }
+//        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               // generateRandomItemData();
+                Toast.makeText(MainActivity.this,"onclick",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-
 
     public void numberClick(View view) {  // кнопка добавки цифры
 

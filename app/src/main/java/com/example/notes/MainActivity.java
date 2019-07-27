@@ -33,9 +33,6 @@ public class MainActivity extends AppCompatActivity {
     int m = 0;
     String pin ="1111";
     Button button;
-    private ItemsDataAdapter adapter;
-    private List<Drawable> images = new ArrayList<>();
-    private Random random = new Random();
 
 
     @Override
@@ -43,31 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        ListView listView = findViewById(R.id.list_item);
-      //  Toolbar toolbar = findViewById(R.id.my_toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
 
-
-
-        // Создаем и устанавливаем адаптер на наш список
-        adapter = new ItemsDataAdapter(this, null);
-        listView.setAdapter(adapter);
-//
-//        // При долгом тапе по элементу списка будем удалять его
-//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                adapter.showItemData(position);
-//                return true;
-//            }
-//        });
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               // generateRandomItemData();
-                Toast.makeText(MainActivity.this,"onclick",Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     public void numberClick(View view) {  // кнопка добавки цифры

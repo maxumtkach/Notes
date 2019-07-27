@@ -1,29 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="MyCardViewStyle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:descendantFocusability="blocksDescendants"
-    android:padding="8dp">
+    android:layout_margin="16dp"
+    android:padding="8dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="10dp">
 
-    <!-- Параметр descendantFocusability позволяет обрабатывать onClickItem()
-    для всего этого элемента списка. И все контролы не чувствительные к прикосновениям считаются
-    областью для нажатия. Кнопки будут работать, а иконки как часть области всего элемента -->
-
-
-    <!-- tools - нужны для проектирования верстки, обычно заполяются примерами
-    как это будет выглядеть, но при выполнении приложения не будут учитываться-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        style="@style/TextAppearance.MaterialComponents.Headline6"
-        android:orientation="vertical">
-
-        <!-- layout_weight - веса, чем меньше вес, тем выше приоритет отрисовки.
-        Сейчас есть более удобные контейнеры, например ConstraintLayout,
-        но базовае Layout-ы проще в понимания и нужнее в обучении :) -->
+        android:orientation="vertical"
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/title"
@@ -32,18 +24,18 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textSize="32dp"
+            android:visibility="visible"
             tools:text="Title Example" />
 
         <TextView
             android:id="@+id/subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="3"
             android:ellipsize="end"
+            android:maxLines="3"
             android:textSize="24dp"
-            tools:text="Subtitle Example" />
+            android:visibility="visible"
+            tools:text="Subtitle Example " />
 
     </LinearLayout>
-
-
 </androidx.cardview.widget.CardView>

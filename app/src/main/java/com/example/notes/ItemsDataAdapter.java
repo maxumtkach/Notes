@@ -44,7 +44,7 @@ public class ItemsDataAdapter extends BaseAdapter {
     }
 
     // Удаляет элемент списка.
-    private void removeItem(int position) {
+    public void removeItem(int position) {
         items.remove(position);
         notifyDataSetChanged();
     }

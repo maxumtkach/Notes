@@ -1,52 +1,43 @@
 package com.example.notes;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView pinText;
+    private EditText pinText;
     private ImageView circleImage1;
     private ImageView circleImage2;
     private ImageView circleImage3;
     private ImageView circleImage4;
-    private  Button buttonSettinds;
-
-    private ImageButton buttonDelete;
-    int m = 0;
-    String pin ="1111";
+    private int m = 0;
     Button button;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        Toast.makeText(this, "значение пикод: " + SettingsActivity.getLogin(), Toast.LENGTH_SHORT).show();
 
+        if (SettingsActivity.getLogin().equals("")) {  //  если не задан ипиин то переход в настройки
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        }
     }
 
-    public void numberClick(View view) {  // кнопка добавки цифры
-
+    // кнопка добавки цифры
+    public void numberClick(View view) {
         m++;
         button = (Button) view;
+
         if (m == 1) {
             pinText.append(button.getText().toString());
             circleImage1.setColorFilter(getResources().getColor(R.color.colorCircle));
@@ -63,43 +54,40 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // совпал пин или нет
     public void pinInit() {
-        if (pinText.getText().toString().equals(pin)) {
-            Toast.makeText(this, "ПИН-КОД  СОВПАЛ" + m, Toast.LENGTH_SHORT).show();
+        if (pinText.getText().toString().equals(SettingsActivity.getLogin())) {
+            Toast.makeText(this, "ПИН-КОД  СОВПАЛ  " + "\n" + "Открыть NOTES", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(this, ListNotesActivity.class);
+            startActivity(intent);
 
         } else {
-            Toast.makeText(this, "ПИН-КОД НЕ СОВПАЛ" + m, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "ПИН-КОД НЕ СОВПАЛ" + "\n" + "ОШИБКА!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         }
     }
 
+    //  инициализация
     public void initView() {
         pinText = findViewById(R.id.pin_text);
         circleImage1 = findViewById(R.id.circle_1);
         circleImage2 = findViewById(R.id.circle_2);
         circleImage3 = findViewById(R.id.circle_3);
         circleImage4 = findViewById(R.id.circle_4);
-        buttonDelete = findViewById(R.id.btn_delete);
-//        button0 = findViewById(R.id.btn_0);
-//        button1 = findViewById(R.id.btn_1);
-//        button2 = findViewById(R.id.btn_2);
-//        button3 = findViewById(R.id.btn_3);
-//        button4 = findViewById(R.id.btn_4);
-//        button5 = findViewById(R.id.btn_5);
-//        button6 = findViewById(R.id.btn_6);
-//        button7 = findViewById(R.id.btn_7);
-//        button8 = findViewById(R.id.btn_8);
-//        button9 = findViewById(R.id.btn_9);
     }
 
-    public void numberClickDelete(View view) {   //переключение кружков
-        if (m>4){
-            m=4;
+    //переключение кружков
+    public void numberClickDelete(View view) {
+        if (m > 4) {
+            m = 4;
         }
+
         int charIndex = 0;
         String text = pinText.getText().toString();
         text = text.substring(0, charIndex) + text.substring(charIndex + 1);
         pinText.setText(text);
-        Toast.makeText(MainActivity.this, "" + m, Toast.LENGTH_SHORT).show();
 
         if (m == 4) {
             circleImage4.setColorFilter(getResources().getColor(R.color.colorCircleDef));

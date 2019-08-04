@@ -126,12 +126,12 @@ public class SettingsActivity extends AppCompatActivity {   //  активити
 
     //  чтение  логина
     private String getStrLog() {
-        String g;
+        String stringStrLog;
         if (sharedPreferences.contains(LOGIN_FILE)) {
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         }
-        g = sharedPreferences.getString(LOGIN_FILE, "");
-        return g;
+        stringStrLog = sharedPreferences.getString(LOGIN_FILE, "");
+        return stringStrLog;
     }
 
     //  сохранение  логина

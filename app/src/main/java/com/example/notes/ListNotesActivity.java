@@ -1,11 +1,8 @@
 package com.example.notes;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -13,8 +10,15 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -22,10 +26,12 @@ import java.util.Random;
 public class ListNotesActivity extends AppCompatActivity {
 
     private ItemsDataAdapter adapter;
-    private List<Drawable> images = new ArrayList<>();
-    private Random random = new Random();
     AlertDialog.Builder ad;
     Context context;
+
+    private static final String TITLE_FILE_NAME = "title text";
+    private static final String SUBTITLE_FILE_NAME = "subtitle text";
+    private static final String DEADLINE_FILE_NAME = "deadline text";
 
 
     @Override
@@ -34,13 +40,14 @@ public class ListNotesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_notes);
 
         ListView listView = findViewById(R.id.list_item);
-        //  Toolbar toolbar = findViewById(R.id.my_toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
-
 
         // Создаем и устанавливаем адаптер на наш список
         adapter = new ItemsDataAdapter(this, null);
         listView.setAdapter(adapter);
+
+        adapter.addItem(new ItemData(readLineFromFile(TITLE_FILE_NAME),
+                readLineFromFile(SUBTITLE_FILE_NAME), readLineFromFile(DEADLINE_FILE_NAME)));
 
         // При долгом тапе по элементу списка будем удалять его
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -88,12 +95,38 @@ public class ListNotesActivity extends AppCompatActivity {
             }
         });
 
+        // КЛИК ДОБАВКИ новой заметки для ее создания
         fab.setOnClickListener(new View.OnClickListener() {  // onclick fab
             @Override
             public void onClick(View view) {
-                generateRandomItemData();
+                //   generateRandomItemData();
+                Intent intent = new Intent(ListNotesActivity.this, NotesActivity.class);
+                startActivity(intent);
             }
         });
+    }
+
+    //  чтение из внутр хранилища
+    public String readLineFromFile(String fileName) {   //read   внутренний
+        FileInputStream fis = null;
+        try {
+            fis = openFileInput(fileName);
+            final InputStreamReader streamReader = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(streamReader);
+
+            return br.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                if (fis != null) {
+                    fis.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -102,10 +135,5 @@ public class ListNotesActivity extends AppCompatActivity {
         return true;
     }
 
-    private void generateRandomItemData() {
 
-        adapter.addItem(new ItemData(
-                "title" + adapter.getCount(),
-                "Hello" + adapter.getCount()));
-    }
 }

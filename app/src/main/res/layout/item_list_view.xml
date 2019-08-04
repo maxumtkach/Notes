@@ -37,5 +37,15 @@
             android:visibility="visible"
             tools:text="Subtitle Example " />
 
+        <TextView
+            android:id="@+id/deadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:textSize="24dp"
+            android:visibility="visible"
+            tools:text="Deadline Example " />
+
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

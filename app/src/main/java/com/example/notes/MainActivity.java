@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         initView();
         Toast.makeText(this, "значение пикод: " + SettingsActivity.getLogin(), Toast.LENGTH_SHORT).show();
 
-        if (SettingsActivity.getLogin().equals("")) {  //  если не задан ипиин то переход в настройки
+        if (SettingsActivity.getLogin()==null) {  //  если не задан ипиин то переход в настройки
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }

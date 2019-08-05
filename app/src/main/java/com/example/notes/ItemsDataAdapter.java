@@ -12,10 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemsDataAdapter extends BaseAdapter {
-NotesActivity notesActivity;
-    private static final String TITLE_FILE_NAME = "title text";//---------------------------------------------
-    private static final String SUBTITLE_FILE_NAME = "subtitle text";//---------------------------------------------
-    private static final String DEADLINE_FILE_NAME = "deadline text";//---------------------------------------------
 
     // Хранит список всех элементов списка
     private List<ItemData> items;

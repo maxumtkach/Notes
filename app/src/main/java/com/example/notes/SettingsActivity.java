@@ -13,12 +13,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 public class SettingsActivity extends AppCompatActivity {   //  активити настроек
 
     private ImageButton buttonVisibility;
@@ -80,48 +74,6 @@ public class SettingsActivity extends AppCompatActivity {   //  активити
             }
         });
 
-    }
-
-    //  чтение из внутр хранилища
-    public String readLineFromFile(String fileName) {   //read   внутренний
-        FileInputStream fis = null;
-        try {
-            fis = openFileInput(fileName);
-            final InputStreamReader streamReader = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(streamReader);
-
-            return br.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            try {
-                if (fis != null) {
-                    fis.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    //  сохранение во внутр файл
-    private void saveIntData(String fileName, String text) {  //save во внутр.
-        FileOutputStream fos = null;
-        try {
-            fos = openFileOutput(fileName, MODE_PRIVATE);
-            fos.write(text.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fos != null) {
-                    fos.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     //  чтение  логина

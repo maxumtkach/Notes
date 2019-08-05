@@ -33,9 +33,8 @@ public class NotesActivity extends AppCompatActivity {
     private EditText titleText;
     private EditText subtitleText;
     private EditText deadlineText;
-  //  DatePickerDialog datePickerDialog;
- //   private ImageButton imageButtonDialog;
-    Calendar dateAndTime = Calendar.getInstance();//------------------------------------------
+
+    Calendar dateAndTime = Calendar.getInstance();// календарь
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +43,20 @@ public class NotesActivity extends AppCompatActivity {
         deadlineText = findViewById(R.id.edit_text_deadline);
         titleText = findViewById(R.id.notes_title);
         subtitleText = findViewById(R.id.notes_subtitle);
-     //   imageButtonDialog = findViewById(R.id.button_dialog);
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);  // кнопка назад
+
+        //  поля заметки для редактирования
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            String j = bundle.getString("title");
+            titleText.setText(j);
+            String l = bundle.getString("subTitle");
+            subtitleText.setText(l);
+            String deadline = bundle.getString("deadline");
+            deadlineText.setText(deadline);
+        }
     }
 
     //  кнопки : назад и сохранить
@@ -55,13 +65,13 @@ public class NotesActivity extends AppCompatActivity {
 
         if (item.getItemId() == R.id.item_notes) {
 
-        String     textTitleValue = titleText.getText().toString();
-          String   textSubtitleValue = subtitleText.getText().toString();
-             String textDeadlineValue = deadlineText.getText().toString();
-          
+            String textTitleValue = titleText.getText().toString();
+            String textSubtitleValue = subtitleText.getText().toString();
+            String textDeadlineValue = deadlineText.getText().toString();
+
             saveIntData(TITLE_FILE_NAME, textTitleValue);
             saveIntData(SUBTITLE_FILE_NAME, textSubtitleValue);
-            saveIntData(DEADLINE_FILE_NAME,textDeadlineValue);
+            saveIntData(DEADLINE_FILE_NAME, textDeadlineValue);
             Toast.makeText(this, "Сохранить заметку", Toast.LENGTH_SHORT).show();
             return true;
         }
@@ -71,7 +81,6 @@ public class NotesActivity extends AppCompatActivity {
 
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -124,6 +133,7 @@ public class NotesActivity extends AppCompatActivity {
             }
         }
     }
+
     //очищение поля дедллайна
     public void onCheckboxClicked(View view) {
         // Получаем флажок

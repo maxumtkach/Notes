@@ -19,9 +19,6 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class ListNotesActivity extends AppCompatActivity {
 
@@ -88,9 +85,16 @@ public class ListNotesActivity extends AppCompatActivity {
             }
         });
 
+        //редактирование заметки
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(ListNotesActivity.this, NotesActivity.class);
+                intent.putExtra("title", readLineFromFile(TITLE_FILE_NAME));
+                intent.putExtra("subTitle", readLineFromFile(SUBTITLE_FILE_NAME));
+                intent.putExtra("deadline", readLineFromFile(DEADLINE_FILE_NAME));
+                startActivity(intent);
+
                 Toast.makeText(ListNotesActivity.this, "onclick редактирование", Toast.LENGTH_SHORT).show();
             }
         });
@@ -99,7 +103,7 @@ public class ListNotesActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {  // onclick fab
             @Override
             public void onClick(View view) {
-                //   generateRandomItemData();
+
                 Intent intent = new Intent(ListNotesActivity.this, NotesActivity.class);
                 startActivity(intent);
             }

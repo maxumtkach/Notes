@@ -15,4 +15,5 @@
     <string name="enter_new_pin">Enter new pin:</string>
     <string name="hint_title">ЗАГОЛОВОК</string>
     <string name="hint_subtitle">Тело заметки</string>
+    <string name="delete_text">УДАЛИТЬ</string>
 </resources>

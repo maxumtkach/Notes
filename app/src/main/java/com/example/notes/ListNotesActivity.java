@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,13 +23,13 @@ import java.io.InputStreamReader;
 
 public class ListNotesActivity extends AppCompatActivity {
 
-    private ItemsDataAdapter adapter;
+   private    ItemsDataAdapter adapter;
     AlertDialog.Builder ad;
     Context context;
-
     private static final String TITLE_FILE_NAME = "title text";
     private static final String SUBTITLE_FILE_NAME = "subtitle text";
     private static final String DEADLINE_FILE_NAME = "deadline text";
+    private static final int CM_DELETE_ID = 1;//--------------------------------
 
 
     @Override
@@ -36,15 +37,15 @@ public class ListNotesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_notes);
 
-        ListView listView = findViewById(R.id.list_item);
+         ListView listView = findViewById(R.id.list_item);
         FloatingActionButton fab = findViewById(R.id.fab);
 
         // Создаем и устанавливаем адаптер на наш список
         adapter = new ItemsDataAdapter(this, null);
         listView.setAdapter(adapter);
 
-        adapter.addItem(new ItemData(readLineFromFile(TITLE_FILE_NAME),
-                readLineFromFile(SUBTITLE_FILE_NAME), readLineFromFile(DEADLINE_FILE_NAME)));
+        adapter.addItem(new ItemData(readLineFromFile(TITLE_FILE_NAME),readLineFromFile(SUBTITLE_FILE_NAME),
+                readLineFromFile(DEADLINE_FILE_NAME)));
 
         // При долгом тапе по элементу списка будем удалять его
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -138,6 +139,24 @@ public class ListNotesActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.mein, menu);
         return true;
     }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(final MenuItem item) {
+//
+//        if (item.getItemId() == R.id.item1) {   // кнопка сохранить
+//adapter.addItem(new ItemData("fnj","gff","hnfb"));
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(0, CM_DELETE_ID, 0, (R.string.delete_text));
+    }
 
 }

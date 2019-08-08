@@ -68,7 +68,8 @@ public class ItemsDataAdapter extends BaseAdapter {
     // Возвращает идентификатор. Обычно это position.
      @Override
     public long getItemId(int position) {
-        return position;
+
+         return position;
     }
 
 

@@ -68,9 +68,11 @@ public class SettingsActivity extends AppCompatActivity {   //  активити
                 getStrLog();
                 Toast.makeText(SettingsActivity.this, "save" + strLogin, Toast.LENGTH_SHORT).show();
 
-                Intent i = new Intent(SettingsActivity.this, SettingsActivity.this.getClass());//перезапуск акт
-                finish();
-                SettingsActivity.this.startActivity(i);
+//                Intent i = new Intent(SettingsActivity.this, SettingsActivity.this.getClass());//перезапуск акт
+//                finish();
+//                SettingsActivity.this.startActivity(i);
+                Intent intent =new Intent(SettingsActivity.this,MainActivity.class);
+                startActivity(intent);
             }
         });
 

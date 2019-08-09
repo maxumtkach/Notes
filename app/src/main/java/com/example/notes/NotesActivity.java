@@ -46,6 +46,7 @@ public class NotesActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);  // кнопка назад
 
+//        adapter.addItem(new ItemData("bbb","hhg","jhgf"));
         //  поля заметки для редактирования
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -81,6 +82,7 @@ public class NotesActivity extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == android.R.id.home) {
+
             Intent intent = new Intent(this, ListNotesActivity.class);
             startActivity(intent);
 

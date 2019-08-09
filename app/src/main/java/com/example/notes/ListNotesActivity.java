@@ -31,22 +31,20 @@ public class ListNotesActivity extends AppCompatActivity {
     private static final String DEADLINE_FILE_NAME = "deadline text";
     private static final int CM_DELETE_ID = 1;//--------------------------------
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_notes);
 
-         ListView listView = findViewById(R.id.list_item);
+        ListView  listView = findViewById(R.id.list_item);
         FloatingActionButton fab = findViewById(R.id.fab);
 
         // Создаем и устанавливаем адаптер на наш список
         adapter = new ItemsDataAdapter(this, null);
         listView.setAdapter(adapter);
 
-        adapter.addItem(new ItemData(readLineFromFile(TITLE_FILE_NAME),readLineFromFile(SUBTITLE_FILE_NAME),
+       adapter.addItem(new ItemData(readLineFromFile(TITLE_FILE_NAME),readLineFromFile(SUBTITLE_FILE_NAME),
                 readLineFromFile(DEADLINE_FILE_NAME)));
-
         // При долгом тапе по элементу списка будем удалять его
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override

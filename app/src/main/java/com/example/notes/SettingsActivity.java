@@ -61,9 +61,6 @@ public class SettingsActivity extends AppCompatActivity {   //  активити
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //   String text=pinEdit.getText().toString();
-                // saveIntData(LOGIN_FILE_NAME,text);
-                //  String logSave= readLineFromFile(LOGIN_FILE_NAME);
                 saveLogin();
                 getStrLog();
                 Toast.makeText(SettingsActivity.this, "save" + strLogin, Toast.LENGTH_SHORT).show();
@@ -71,7 +68,7 @@ public class SettingsActivity extends AppCompatActivity {   //  активити
 //                Intent i = new Intent(SettingsActivity.this, SettingsActivity.this.getClass());//перезапуск акт
 //                finish();
 //                SettingsActivity.this.startActivity(i);
-                Intent intent =new Intent(SettingsActivity.this,MainActivity.class);
+                Intent intent =new Intent(SettingsActivity.this,ListNotesActivity.class);
                 startActivity(intent);
             }
         });

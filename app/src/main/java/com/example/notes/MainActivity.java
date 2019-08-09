@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView circleImage4;
     private int m = 0;
     Button button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         initView();
         Toast.makeText(this, "значение пикод: " + SettingsActivity.getLogin(), Toast.LENGTH_SHORT).show();
 
-        if (SettingsActivity.getLogin().equals("")||(SettingsActivity.getLogin()==null)) {  //  если не задан пиин то переход в настройки
+        if (SettingsActivity.getLogin() == null || SettingsActivity.getLogin().equals("")) {  //  если не задан пиин то переход в настройки
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }

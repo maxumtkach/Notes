@@ -10,11 +10,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ItemsDataAdapter extends BaseAdapter {
 
     // Хранит список всех элементов списка
-    private List<ItemData> items;
+     List<ItemData> items;
+    private ArrayList<Map<String, Object>> data;
 
     // LayoutInflater – класс, который из
     // layout-файла создает View-элемент.

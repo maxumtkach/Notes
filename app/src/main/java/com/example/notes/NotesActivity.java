@@ -1,5 +1,6 @@
 package com.example.notes;
 
+
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -26,16 +27,13 @@ import java.util.Objects;
 
 public class NotesActivity extends AppCompatActivity {
 
-    private static final String TITLE_FILE_NAME = "title text";
-    private static final String SUBTITLE_FILE_NAME = "subtitle text";
-    private static final String DEADLINE_FILE_NAME = "deadline text";
     private static final String FILE_NAME = "text";
-
     private EditText titleText;
     private EditText subtitleText;
     private EditText deadlineText;
 
     Calendar dateAndTime = Calendar.getInstance();// календарь
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,50 +44,55 @@ public class NotesActivity extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);  // кнопка назад
 
-//        adapter.addItem(new ItemData("bbb","hhg","jhgf"));
         //  поля заметки для редактирования
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        if (bundle != null) {
-            String j = bundle.getString("title");
-            titleText.setText(j);
-            String l = bundle.getString("subTitle");
-            subtitleText.setText(l);
-            String deadline = bundle.getString("deadline");
-            deadlineText.setText(deadline);
-        }
-
+//        Intent intent = getIntent();
+//        Bundle bundle = intent.getExtras();
+//        if (bundle != null) {
+//            String j = bundle.getString("title");
+//            titleText.setText(j);
+//            String l = bundle.getString("subTitle");
+//            subtitleText.setText(l);
+//            String deadline = bundle.getString("deadline");
+//            deadlineText.setText(deadline);
+//        }
     }
+
+    public void toSsve() {
+        String textTitleValue = titleText.getText().toString() ;
+        String textSubtitleValue = subtitleText.getText().toString() ;
+        String textDeadlineValue = deadlineText.getText().toString();
+
+        saveIntData(FILE_NAME, textTitleValue +"::"+ textSubtitleValue + "::"+textDeadlineValue);
+    }
+
 
     //  кнопки : назад и сохранить
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
 
-        if (item.getItemId() == R.id.item_notes) {   // кнопка сохранить
+        if (item.getItemId() == R.id.item_notes_save) {   // кнопка сохранить
 
             String textTitleValue = titleText.getText().toString();
             String textSubtitleValue = subtitleText.getText().toString();
             String textDeadlineValue = deadlineText.getText().toString();
 
-            saveIntData(TITLE_FILE_NAME, textTitleValue);
-            saveIntData(SUBTITLE_FILE_NAME, textSubtitleValue);
-            saveIntData(DEADLINE_FILE_NAME, textDeadlineValue);
+            toSsve();
+            // saveIntData(SUBTITLE_FILE_NAME, textSubtitleValue);
+            //   saveIntData(DEADLINE_FILE_NAME, textDeadlineValue);
 
             Intent intent = new Intent(this, ListNotesActivity.class);
             startActivity(intent);
 
-            Toast.makeText(this, "Сохранить заметку", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Сохраняем заметку", Toast.LENGTH_SHORT).show();
             return true;
         }
         if (item.getItemId() == android.R.id.home) {
-
-            Intent intent = new Intent(this, ListNotesActivity.class);
-            startActivity(intent);
-
+            this.finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     // menu
     @Override
@@ -121,7 +124,9 @@ public class NotesActivity extends AppCompatActivity {
     public String readLineFromFile(String fileName) {   //read   внутренний
 
         FileInputStream fis = null;
+
         try {
+
             fis = openFileInput(fileName);
             final InputStreamReader streamReader = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(streamReader);
@@ -204,4 +209,5 @@ public class NotesActivity extends AppCompatActivity {
             setInitialDateTime();
         }
     };
+
 }

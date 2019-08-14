@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,33 +17,48 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class ListNotesActivity extends AppCompatActivity {
 
-   private    ItemsDataAdapter adapter;
+    private ItemsDataAdapter adapter;
     AlertDialog.Builder ad;
     Context context;
-    private static final String TITLE_FILE_NAME = "title text";
-    private static final String SUBTITLE_FILE_NAME = "subtitle text";
-    private static final String DEADLINE_FILE_NAME = "deadline text";
-    private static final int CM_DELETE_ID = 1;//--------------------------------
+    private static final String FILE_NAME = "text";
+//    private static final int CM_DELETE_ID = 1;//--------------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_notes);
 
-        ListView  listView = findViewById(R.id.list_item);
+        ListView listView = findViewById(R.id.list_item);
         FloatingActionButton fab = findViewById(R.id.fab);
+        final String[] values = toRead();
 
         // Создаем и устанавливаем адаптер на наш список
         adapter = new ItemsDataAdapter(this, null);
         listView.setAdapter(adapter);
 
-       adapter.addItem(new ItemData(readLineFromFile(TITLE_FILE_NAME),readLineFromFile(SUBTITLE_FILE_NAME),
-                readLineFromFile(DEADLINE_FILE_NAME)));
+//        Toast.makeText(this, "Возможно вы правы"+values[0]+values[1]+values[2], Toast.LENGTH_LONG)
+//                .show();
+             adapter.addItem(new ItemData(values[0], values[1], values[2]));
+//         title = readLineFromFile(TITLE_FILE_NAME);
+//         subtitle = readLineFromFile(SUBTITLE_FILE_NAME);
+//         deadline = readLineFromFile(DEADLINE_FILE_NAME);
+//        adapter.addItem(new ItemData(readLineFromFile(TITLE_FILE_NAME),
+//                readLineFromFile(SUBTITLE_FILE_NAME),readLineFromFile(DEADLINE_FILE_NAME)));
+//
+//                saveIntData(TITLE_FILE, title);
+//                saveIntData(SUBTITLE, subtitle);
+//                saveIntData(DEADLINE, deadline);
+//        nevTitle =readLineFromFile(TITLE_FILE);
+//         nevSubtitle=readLineFromFile(SUBTITLE);
+//         nevDeadline=readLineFromFile(DEADLINE);
+//        adapter.addItem(new ItemData(nevTitle,nevSubtitle,nevDeadline));
+
         // При долгом тапе по элементу списка будем удалять его
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -88,10 +102,12 @@ public class ListNotesActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final int deletePosition = position;
+                adapter.removeItem(deletePosition);
                 Intent intent = new Intent(ListNotesActivity.this, NotesActivity.class);
-                intent.putExtra("title", readLineFromFile(TITLE_FILE_NAME));
-                intent.putExtra("subTitle", readLineFromFile(SUBTITLE_FILE_NAME));
-                intent.putExtra("deadline", readLineFromFile(DEADLINE_FILE_NAME));
+                intent.putExtra("title", values[0]);
+                intent.putExtra("subTitle", values[1]);
+                intent.putExtra("deadline", values[2]);
                 startActivity(intent);
 
                 Toast.makeText(ListNotesActivity.this, "onclick редактирование", Toast.LENGTH_SHORT).show();
@@ -107,6 +123,11 @@ public class ListNotesActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    //читаем в массив
+    public String[] toRead() {
+        return readLineFromFile(FILE_NAME).split("::");
     }
 
     //  чтение из внутр хранилища
@@ -142,19 +163,36 @@ public class ListNotesActivity extends AppCompatActivity {
 //    public boolean onOptionsItemSelected(final MenuItem item) {
 //
 //        if (item.getItemId() == R.id.item1) {   // кнопка сохранить
-//adapter.addItem(new ItemData("fnj","gff","hnfb"));
 //            return true;
 //        }
 //
 //        return super.onOptionsItemSelected(item);
 //    }
 
+//
+//    @Override
+//    public void onCreateContextMenu(ContextMenu menu, View v,
+//                                    ContextMenu.ContextMenuInfo menuInfo) {
+//        super.onCreateContextMenu(menu, v, menuInfo);
+//        menu.add(0, CM_DELETE_ID, 0, (R.string.delete_text));
+//    }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v,
-                                    ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, CM_DELETE_ID, 0, (R.string.delete_text));
+    //  сохранение во внутр файл
+    private void saveIntData(String fileName, String text) {  //save во внутр.
+        FileOutputStream fos = null;
+        try {
+            fos = openFileOutput(fileName, MODE_PRIVATE);
+            fos.write(text.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
-
 }
